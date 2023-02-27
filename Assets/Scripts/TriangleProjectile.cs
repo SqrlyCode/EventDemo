@@ -50,6 +50,6 @@ public class TriangleProjectile : MonoBehaviour
         Destroy(gameObject);
         Circle otherCircle = otherCollider.GetComponent<Circle>();
         if(otherCircle != null)
-            Destroy(otherCircle.gameObject);
+            otherCircle.Die();
     }
 }

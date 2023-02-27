@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Circle : MonoBehaviour
 {
+    [SerializeField] private GameObject _deathParticlesPrefab;
+
+
     private GameManager _gm;
+    private MyTween _myTween;
 
     private void Awake()
     {
         _gm = FindObjectOfType<GameManager>();
+        _myTween = GetComponent<MyTween>();
     }
 
     private void OnEnable()
@@ -30,7 +35,12 @@ public class Circle : MonoBehaviour
 
     public void Die()
     {
-        if (this != null)
-            Destroy(gameObject);
+        _gm._score++;
+        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.2f, () =>
+            {
+                Destroy(gameObject);
+                Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
+            }
+        ));
     }
 }

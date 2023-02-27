@@ -18,14 +18,15 @@ public class PlayerController : MonoBehaviour
     private Action _leftClickAction;
     private Action _rightClickAction;
     private Action _leftShiftAction;
-    
     private Vector2 _mouseWorldPos;
     private GameManager _gameManager;
-    
+    private MyTween _myTween;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _gameManager = FindObjectOfType<GameManager>();
+        _myTween = GetComponent<MyTween>();
 
         _leftClickAction = ShootAtPosition;
         _rightClickAction = TeleportToPosition;
@@ -50,22 +51,22 @@ public class PlayerController : MonoBehaviour
         //LeftClick
         if (Input.GetKeyDown(KeyCode.Mouse0))
             _leftClickAction();
-        
+
         //Rightclick
         if (Input.GetKeyDown(KeyCode.Mouse1))
             _rightClickAction();
-        
+
         //Shiftclick
         if (Input.GetKeyDown(KeyCode.LeftShift))
             _leftShiftAction();
-        
+
         _shootTimer += Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         InputShuffle inputShuffle = other.GetComponent<InputShuffle>();
-        
+
         if (inputShuffle != null)
         {
             inputShuffle.Die();
@@ -75,7 +76,6 @@ public class PlayerController : MonoBehaviour
         Circle circle = other.GetComponent<Circle>();
         if (circle != null)
         {
-            circle.Die();
             Die();
         }
     }
@@ -100,7 +100,12 @@ public class PlayerController : MonoBehaviour
 
     private void TeleportToPosition()
     {
-        transform.position = _mouseWorldPos;
+        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.15f, () =>
+            {
+                transform.position = _mouseWorldPos;
+                StartCoroutine(_myTween.AnimatedScaleCR(Vector3.one, 0.15f));
+            }
+        ));
     }
 
     private void ToggleRunning()
