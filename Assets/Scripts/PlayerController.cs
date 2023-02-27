@@ -15,9 +15,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _isRunning;
 
-    private Action _leftClickAction;
-    private Action _rightClickAction;
-    private Action _leftShiftAction;
     private Vector2 _mouseWorldPos;
     private GameManager _gameManager;
     private MyTween _myTween;
@@ -27,10 +24,6 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _gameManager = FindObjectOfType<GameManager>();
         _myTween = GetComponent<MyTween>();
-
-        _leftClickAction = ShootAtPosition;
-        _rightClickAction = TeleportToPosition;
-        _leftShiftAction = ToggleRunning;
     }
 
     void Update()
@@ -50,15 +43,15 @@ public class PlayerController : MonoBehaviour
 
         //LeftClick
         if (Input.GetKeyDown(KeyCode.Mouse0))
-            _leftClickAction();
+            Shoot();
 
         //Rightclick
         if (Input.GetKeyDown(KeyCode.Mouse1))
-            _rightClickAction();
+            Teleport();
 
         //Shiftclick
         if (Input.GetKeyDown(KeyCode.LeftShift))
-            _leftShiftAction();
+            ToggleRunning();
 
         _shootTimer += Time.deltaTime;
     }
@@ -80,8 +73,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 
-    public void ShootAtPosition()
+    public void Shoot()
     {
         if (_shootTimer > _shootCooldown)
         {
@@ -91,13 +88,8 @@ public class PlayerController : MonoBehaviour
             newProjectileGo.transform.up = _mouseWorldPos - (Vector2)transform.position;
         }
     }
-
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    private void TeleportToPosition()
+    
+    private void Teleport()
     {
         //TODO: Use Callbacks to animate the Teleport
         //----------------------------------------------------------------------------------------------
@@ -113,14 +105,6 @@ public class PlayerController : MonoBehaviour
 
     private void ShuffleInput()
     {
-        List<Action> actionList = new List<Action>();
-        actionList.Add(ShootAtPosition);
-        actionList.Add(TeleportToPosition);
-        actionList.Add(ToggleRunning);
-        List<Action> randomizedActionList = actionList.OrderBy((x) => Random.Range(0, 2)).ToList();
-
-        _leftClickAction = randomizedActionList[0];
-        _rightClickAction = randomizedActionList[1];
-        _leftShiftAction = randomizedActionList[2];
+        //TODO: Shuffle the input
     }
 }
