@@ -16,10 +16,10 @@ public class SpriteLoader : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
-            StartCoroutine(GetSpriteFromWeb((s) => _spriteRenderer.sprite = s));
+            StartCoroutine(GetSpriteFromWeb());
     }
 
-    IEnumerator GetSpriteFromWeb(System.Action<Sprite> onSpriteLoaded)
+    IEnumerator GetSpriteFromWeb(Action<Sprite> onSpriteLoaded = null)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://sqrlycode.com/public_images/ToastCat.png");
         //Wait until image was downloaded
@@ -27,6 +27,6 @@ public class SpriteLoader : MonoBehaviour
 
         Texture myTexture = DownloadHandlerTexture.GetContent(www);
         Sprite s = Sprite.Create((Texture2D)myTexture, new Rect(0, 0, myTexture.width, myTexture.height), Vector2.one * 0.5f, myTexture.height);
-        onSpriteLoaded(s);
+        onSpriteLoaded?.Invoke(s);
     }
 }
