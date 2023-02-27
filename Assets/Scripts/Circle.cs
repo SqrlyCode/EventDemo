@@ -17,29 +17,13 @@ public class Circle : MonoBehaviour
         _myTween = GetComponent<MyTween>();
     }
 
-    private void OnEnable()
-    {
-        _gm.gameOver += GameManager_GameOver;
-    }
-
-    private void OnDisable()
-    {
-        if (_gm != null)
-            _gm.gameOver -= GameManager_GameOver;
-    }
-
-    private void GameManager_GameOver(int score)
-    {
-        Die();
-    }
-
     public void Die()
     {
         _gm._score++;
         
         //TODO: use callbacks
         //----------------------------------------------------------------------------------------------
-        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.4f));
+        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.2f));
         Destroy(gameObject);
         Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
         //----------------------------------------------------------------------------------------------

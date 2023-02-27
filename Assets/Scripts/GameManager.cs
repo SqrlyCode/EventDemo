@@ -13,18 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Rect _spawnArea;
     [SerializeField] private GameObject _circlePrefab;
 
-    //Raises event where the score is the parameter
-    public event Action<int> gameOver;
-
     void Start()
     {
         for (int i = 0; i < _amountOfCirclesToSpawn; i++)
             SpawnCircle();
-    }
-
-    public void InvokeGameOver()
-    {
-        gameOver?.Invoke(_score);
     }
 
     public void Restart()

@@ -16,27 +16,11 @@ public class TriangleProjectile : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
-    {
-        _gm.gameOver += GameManager_GameOver;
-    }
-
-    private void OnDisable()
-    {
-        if(_gm != null)
-            _gm.gameOver -= GameManager_GameOver;
-    }
-
 
     private void Start()
     {
         //Must be ins tart because Projectile-rotation is not yet set in Awake.
         _rb.velocity = transform.up * _moveSpeed;
-    }
-
-    private void GameManager_GameOver(int score)
-    {
-        Die();
     }
 
     private void Die()
