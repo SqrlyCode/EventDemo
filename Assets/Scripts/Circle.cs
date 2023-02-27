@@ -36,11 +36,12 @@ public class Circle : MonoBehaviour
     public void Die()
     {
         _gm._score++;
-        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.2f, () =>
-            {
-                Destroy(gameObject);
-                Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
-            }
-        ));
+        
+        //TODO: use callbacks
+        //----------------------------------------------------------------------------------------------
+        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.4f));
+        Destroy(gameObject);
+        Instantiate(_deathParticlesPrefab, transform.position, Quaternion.identity);
+        //----------------------------------------------------------------------------------------------
     }
 }

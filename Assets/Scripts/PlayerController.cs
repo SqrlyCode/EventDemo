@@ -100,12 +100,11 @@ public class PlayerController : MonoBehaviour
 
     private void TeleportToPosition()
     {
-        StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.15f, () =>
-            {
-                transform.position = _mouseWorldPos;
-                StartCoroutine(_myTween.AnimatedScaleCR(Vector3.one, 0.15f));
-            }
-        ));
+        //TODO: Use Callbacks to animate the Teleport
+        //----------------------------------------------------------------------------------------------
+        // StartCoroutine(_myTween.AnimatedScaleCR(Vector3.zero, 0.15f));
+        transform.position = _mouseWorldPos;
+        //----------------------------------------------------------------------------------------------
     }
 
     private void ToggleRunning()
