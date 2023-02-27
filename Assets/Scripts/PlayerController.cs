@@ -20,10 +20,12 @@ public class PlayerController : MonoBehaviour
     private Action _leftShiftAction;
     
     private Vector2 _mouseWorldPos;
+    private GameManager _gameManager;
     
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _gameManager = FindObjectOfType<GameManager>();
 
         _leftClickAction = ShootAtPosition;
         _rightClickAction = TeleportToPosition;
@@ -62,10 +64,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "InputShuffle")
+        InputShuffle inputShuffle = other.GetComponent<InputShuffle>();
+        
+        if (inputShuffle != null)
         {
-            Destroy(other.gameObject);
+            inputShuffle.Die();
             ShuffleInput();
+        }
+
+        Circle circle = other.GetComponent<Circle>();
+        if (circle != null)
+        {
+            circle.Die();
+            Die();
         }
     }
 
@@ -79,6 +90,12 @@ public class PlayerController : MonoBehaviour
             GameObject newProjectileGo = Instantiate(_projectileGo, shootOrigin, Quaternion.identity);
             newProjectileGo.transform.up = _mouseWorldPos - (Vector2)transform.position;
         }
+    }
+
+    private void Die()
+    {
+        _gameManager.InvokeGameOver();
+        Destroy(gameObject);
     }
 
     private void TeleportToPosition()

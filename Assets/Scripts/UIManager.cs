@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class Circle : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _scoreTxt;
+    [SerializeField] private GameObject _gameOverPanel;
+
     private GameManager _gm;
 
     private void Awake()
@@ -19,18 +23,13 @@ public class Circle : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_gm != null)
+        if(_gm != null)
             _gm.gameOver -= GameManager_GameOver;
     }
 
     private void GameManager_GameOver(int score)
     {
-        Die();
-    }
-
-    public void Die()
-    {
-        if (this != null)
-            Destroy(gameObject);
+        _scoreTxt.text = score.ToString();
+        _gameOverPanel.SetActive(true);
     }
 }

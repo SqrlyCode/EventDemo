@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6854923970138643824}
   - component: {fileID: 5144134552677111319}
+  - component: {fileID: 8717489704339357234}
   m_Layer: 0
   m_Name: InputShuffle (2)
   m_TagString: InputShuffle
@@ -60,6 +61,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8717489704339357234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389592235613088108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32035f86c6862304b963fa975c4a0abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2520772170329758428
 GameObject:
   m_ObjectHideFlags: 0
