@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MyTween : MonoBehaviour
 {
-    public IEnumerator AnimatedScaleCR(Vector3 targetScale, float duration, Action onComplete = null)
+    public IEnumerator AnimatedScaleCR(Vector3 targetScale, float duration)
     {
         Vector3 initScale = transform.localScale;
         float timer = 0;
@@ -14,7 +14,5 @@ public class MyTween : MonoBehaviour
             transform.localScale = Vector3.Lerp(initScale, targetScale, timer / duration);
             yield return null;
         }
-
-        onComplete?.Invoke();
     }
 }
